@@ -5,6 +5,8 @@ from PyQt5.QtCore import pyqtSlot
 
 
 class App(QWidget):
+    # global variable for df
+    globvar = 0
 
     def __init__(self):
         super().__init__()
@@ -74,8 +76,82 @@ class App(QWidget):
         print(df)
         print('Clicked')
 
+        df.to_csv('out.csv', encoding='utf-8', index=False)
+
+        global globvar  # Needed to modify global copy of globvar
+        globvar = df
+
+    def get_global(self):
+        return globvar
+
+    #def getmean(self):
+        #Second column
+        k=df.iloc[:,1]
+        print(k.mean())
+        print(k.median())
+        #Returns item that appears the most
+        #May return more than 1 value
+        print(k.mode())
+        #Perform standard deviation
+        print(k.std())
+        #Perform variance of sample calculation
+        print(k.var())
+        #Item in 4th row 1st item
+        #print(df.iloc[3,0])
+        # row to row,column to column
+        #print(df.iloc[0:1, 0: 2])
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+
+class statistics(App):
+    # global variable for df
+#    globvar2 = 0
+
+    t= App()
+#    t.get_global()
+
+    globvar2=t.get_global()
+
+    def singleColumn(self):
+        global globvar2
+        #col=self
+        col=1
+        # Second column
+        k = globvar2.iloc[:, col]
+        #k= self + 2
+        print(k)
+        #return k
+
+    def getmean(self):
+        #k=self
+        df=globvar
+        k = df.iloc[:, 1]
+        print(k.mean())
+
+    def getmedian(self):
+        k=self
+        print(k.median())
+
+    def getmode(self):
+        k=self
+        print(k.mode())
+
+    def getstd(self):
+        k=self
+        print(k.std())
+
+    def getvariance(self):
+        k=self
+        print(k.var())
+
+
+if __name__ == '__main__':
+    foo = statistics()
+    foo.singleColumn()
+
+
+
+
